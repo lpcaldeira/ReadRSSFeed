@@ -1,0 +1,85 @@
+﻿@model List<ReadRSSFeed.Models.Feed>
+
+@{
+    ViewBag.Title = "Últimas notícias";
+}
+<br />
+<h2>@ViewBag.Title</h2>
+<hr />
+<br />
+@using (Html.BeginForm())
+{
+    <input type="URL" name="RSSURL" required
+           class="form-control" value="http://deen.com.br/blog/feed/" placeholder="http://deen.com.br/blog/feed/"
+           style="min-width:100%" />
+    <br />
+    <input type="submit" class="btn btn-success" value="Ler Feed" />
+}
+
+<hr />
+<br />
+<div class="row">
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="owl-carousel owl-theme">
+            @foreach (var item in Model.Take(5))
+            {
+                <div>
+                    <h4>@item.Title</h4>
+                    @Html.Raw(item.Image)
+                    <p>@Html.Raw(@item.Description)</p>
+                </div>
+            }
+        </div>
+    }
+
+</div>
+<hr />
+<br />
+<div class="row">
+
+    @if (Model != null && Model.Count > 0)
+    {
+        foreach (var item in Model.Skip(5))
+        {
+            <a href="@item.Link"><p>@item.Title</p></a>
+        }
+    }
+
+</div>
+
+@section Scripts{
+    <!-- CSS -->
+    <link href="~/Content/owl.carousel.css" rel="stylesheet" />
+    <link href="~/Content/owl.theme.default.css" rel="stylesheet" />
+
+    <!-- JS -->
+    <script src="~/Scripts/owl.carousel.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.owl-carousel').owlCarousel({
+                autoplay: true,
+                center: true,
+                loop: true,
+                nav: true,
+                margin: 30,
+                responsiveClass: true,
+                autoHeight: true,
+                autoplaySpeed: 3000,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 1
+                    },
+                    1000: {
+                        items: 1
+                    }
+                }
+            })
+        });
+    </script>
+}

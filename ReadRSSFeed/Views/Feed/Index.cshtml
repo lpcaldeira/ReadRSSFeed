@@ -1,0 +1,75 @@
+﻿@model List<ReadRSSFeed.Models.Feed>
+
+@{
+    ViewBag.Title = "ÚLTIMAS NOTÍCIAS";
+}
+
+<div class="row" style="background-color: #39DE92; max-width: 500px; min-height: 350px; padding: 4%; color: #ffffff;">
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <div class="owl-carousel owl-loaded owl-theme">
+            @foreach (var item in Model.Take(5))
+            {
+                <div>
+                    <h2 style="width: 70%; font-family: 'Times New Roman', Times, serif;">@item.Title</h2>
+                    <span style="font-size: 10px;">@String.Format("{0:d 'de' MMMM 'de' yyyy}", item.PubDate)</span>
+                </div>
+            }
+        </div>
+    }
+
+</div>
+
+<br />
+
+<div class="row" style="background-color: #F4FAF8; max-width: 500px; min-height: 350px;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr><td style="border: 1px; padding: 20px;">@ViewBag.Title</td></tr>
+
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var item in Model.Skip(5))
+                {
+                    <tr><td style="border: 1px; padding: 20px;">@item.Title</td></tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <!-- CSS -->
+    <link href="~/Content/owl.carousel.css" rel="stylesheet" />
+    <link href="~/Content/owl.theme.default.css" rel="stylesheet" />
+
+    <!-- JS -->
+    <script src="~/Scripts/owl.carousel.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.owl-carousel').owlCarousel({
+                autoplay: true,
+                center: true,
+                loop: true,
+                dots: true,
+                nav: false,
+                margin: 30,
+                responsiveClass: true,
+                autoplaySpeed: 3000,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 1
+                    },
+                    1000: {
+                        items: 1
+                    }
+                }
+            })
+        });
+    </script>
+}
